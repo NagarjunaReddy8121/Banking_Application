@@ -54,26 +54,26 @@ class BankingApplicationTests {
 		account.setBalance(100.00);
 	}
 
-//	@Test
-//	public void checkDepositAmountIncreaseOrNot(){
-//		when(accountRepository.findById(1)).thenReturn(Optional.of(account));
-//		when(accountRepository.save(any(Account.class))).thenReturn(account);
-//
-//		Account deposit = accountService.deposit(1, 50.00);
-//
-//		assertEquals(150.0,deposit.getBalance());
-//		verify(accountRepository,times(1)).findById(1);
-//		verify(accountRepository,times(1)).save(account);
-//	}
-//
-//	@Test
-//	public void checkDepositShouldThrowExceptionOrNot(){
-//		when(accountRepository.findById(1)).thenReturn(Optional.empty());
-//
-//		assertThrows(AccountNotFoundException.class,()->accountService.deposit(1,50.00));
-//		verify(accountRepository,times(1)).findById(1);
-//		verify(accountRepository,times(0)).save(any(Account.class));
-//	}
+	@Test
+	public void checkDepositAmountIncreaseOrNot(){
+		when(accountRepository.findById(1)).thenReturn(Optional.of(account));
+		when(accountRepository.save(any(Account.class))).thenReturn(account);
+
+		Account deposit = accountService.deposit(1, 50.00);
+
+		assertEquals(150.0,deposit.getBalance());
+		verify(accountRepository,times(1)).findById(1);
+		verify(accountRepository,times(1)).save(account);
+	}
+
+	@Test
+	public void checkDepositShouldThrowExceptionOrNot(){
+		when(accountRepository.findById(1)).thenReturn(Optional.empty());
+
+		assertThrows(AccountNotFoundException.class,()->accountService.deposit(1,50.00));
+		verify(accountRepository,times(1)).findById(1);
+		verify(accountRepository,times(0)).save(any(Account.class));
+	}
 
 	@Test
 	public void checkWithdrawAmountDecreasedOrNot(){
