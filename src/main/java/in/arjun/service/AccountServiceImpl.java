@@ -1,6 +1,8 @@
 package in.arjun.service;
 
 
+import in.arjun.advice.AccountNotFoundException;
+import in.arjun.advice.InsufficientFundsException;
 import in.arjun.dto.Request;
 import in.arjun.dto.Response;
 import in.arjun.entity.Account;
@@ -36,16 +38,16 @@ public class AccountServiceImpl implements AccountService{
 
     @Override
     public Account deposit(Integer id, Double amount) {
-        Account account = getAccountById(id).orElseThrow(() -> new RuntimeException("account not found"));
+        Account account = getAccountById(id).orElseThrow(() -> new AccountNotFoundException("account not found with the given id:"+id));
         account.setBalance(account.getBalance()+amount);
         return repository.save(account);
     }
 
     @Override
     public Account withdraw(Integer id, Double amount) {
-        Account account = getAccountById(id).orElseThrow(() -> new RuntimeException("account not found"));
+        Account account = getAccountById(id).orElseThrow(() -> new AccountNotFoundException("account not found with the given id:"+id));
          if(account.getBalance()<amount){
-             throw new RuntimeException("insufficient funds");
+             throw new InsufficientFundsException("insufficient funds");
          }
          account.setBalance(account.getBalance()-amount);
         return repository.save(account);
